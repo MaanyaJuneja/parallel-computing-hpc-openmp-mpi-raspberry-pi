@@ -1,0 +1,26 @@
+# Lab 1 Task 4 - static IPs. Append the matching block to /etc/dhcpcd.conf
+# on each Pi, then: sudo systemctl restart dhcpcd
+
+# ---- rpi1 ----
+interface eth0
+static ip_address=192.168.1.101/24
+static routers=192.168.1.100
+static domain_name_servers=8.8.8.8 8.8.4.4
+
+# ---- rpi2 ----
+interface eth0
+static ip_address=192.168.1.102/24
+static routers=192.168.1.100
+static domain_name_servers=8.8.8.8 8.8.4.4
+
+# ---- rpi3 ----
+interface eth0
+static ip_address=192.168.1.103/24
+static routers=192.168.1.100
+static domain_name_servers=8.8.8.8 8.8.4.4
+
+# ---- rpi4 ----
+interface eth0
+static ip_address=192.168.1.104/24
+static routers=192.168.1.100
+static domain_name_servers=8.8.8.8 8.8.4.4

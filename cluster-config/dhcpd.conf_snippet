@@ -1,0 +1,13 @@
+# Append to /etc/dhcp/dhcpd.conf on the PC  (Lab 1 Task 2)
+# NOTE: routers MUST be 192.168.1.100 (the PC's LAN IP), not 192.168.1.1
+subnet 192.168.1.0 netmask 255.255.255.0 {
+  range 192.168.1.100 192.168.1.200;
+  option domain-name-servers 8.8.8.8, 8.8.4.4;
+  option routers 192.168.1.100;
+  option broadcast-address 192.168.1.255;
+  default-lease-time 600;
+  max-lease-time 7200;
+}
+
+# And in /etc/default/isc-dhcp-server  (use YOUR LAN interface name):
+# INTERFACESv4="enxc8a362e30306"

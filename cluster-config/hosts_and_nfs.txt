@@ -1,0 +1,27 @@
+# ===== /etc/hosts (add on every Pi, and on the PC) =====
+192.168.1.101 rpi1
+192.168.1.102 rpi2
+192.168.1.103 rpi3
+192.168.1.104 rpi4
+
+# ===== NFS server on rpi1: /etc/exports =====
+/home/pi/shared 192.168.1.0/24(rw,sync,no_subtree_check)
+#   sudo apt-get install nfs-kernel-server
+#   mkdir -p /home/pi/shared
+#   sudo exportfs -ra && sudo systemctl restart nfs-kernel-server
+
+# ===== NFS clients rpi2-4 =====
+#   sudo apt-get install nfs-common
+#   mkdir -p ~/shared
+#   sudo mount rpi1:/home/pi/shared ~/shared
+# Permanent (added in Lab 3) - /etc/fstab line on rpi2-4:
+rpi1:/home/pi/shared /home/pi/shared nfs defaults,_netdev,nofail,x-systemd.automount,x-systemd.mount-timeout=30 0 0
+
+# ===== Passwordless SSH (on every Pi) =====
+#   ssh-keygen
+#   ssh-copy-id pi@rpiX     (to each of the other 3 Pis -> 12 copies total)
+
+# ===== MPI (Task 7) =====
+#   sudo apt-get install openmpi-bin libopenmpi-dev     (all 4 Pis)
+#   cd /home/pi/shared && mpicc pi_estimate.c -o pi_estimate -O3
+#   mpirun -np 16 -hostfile hosts ./pi_estimate 5000000000
