@@ -32,7 +32,7 @@ The configuration files are in [`cluster-config/`](cluster-config/).
 
 ## 2. OpenMP: what scales and what doesn't
 
-<img src="figures/pi_scaling.png" alt="Speedup vs threads on a Raspberry Pi: Game of Life 3.99x, Floyd-Warshall 3.48x, vector sum 1.13x at 4 threads" width="680">
+<img src="figures/pi_scaling_chart.png" alt="Speedup vs threads on a Raspberry Pi: Game of Life 3.99x, Floyd-Warshall 3.48x, vector sum 1.13x at 4 threads" width="680">
 
 | Workload (one Pi, 4 threads) | Speedup | Efficiency | Why |
 |---|---|---|---|
@@ -44,7 +44,7 @@ The vector sum barely improves on ASPIRE2A either: 4.69× on 64 threads (7.3% ef
 
 ### Loop scheduling for uneven work
 
-<img src="figures/primes_schedules.png" alt="Prime counting time by schedule: static 131 ms, dynamic 102 ms, guided 76 ms" width="680">
+<img src="figures/primes_schedules_chart.png" alt="Prime counting time by schedule: static 131 ms, dynamic 102 ms, guided 76 ms" width="680">
 
 Checking whether *n* is prime costs about √*n*, so the work grows along the loop. `static` gives the last thread the most expensive block; `dynamic` rebalances, but pays for every chunk it hands out; `guided` starts with big chunks and shrinks them, so it balances the load with less overhead. Result: **guided was 1.7× faster than static** on the same 4 cores, and the ranking held across repeated runs.
 
@@ -52,7 +52,7 @@ On ASPIRE2A, with a smaller problem (N = 200,000, about 7 ms in total), `dynamic
 
 ## 3. Graph algorithms: barriers limit scaling
 
-<img src="figures/aspire_graph_speedup.png" alt="Speedup on ASPIRE2A at 16, 32 and 64 threads: triangle counting reaches 48.7x, Floyd-Warshall 29.0x" width="680">
+<img src="figures/aspire_graph_speedup_chart.png" alt="Speedup on ASPIRE2A at 16, 32 and 64 threads: triangle counting reaches 48.7x, Floyd-Warshall 29.0x" width="680">
 
 | ASPIRE2A, 64 threads | Serial | Parallel | Speedup | Efficiency |
 |---|---|---|---|---|
@@ -71,7 +71,7 @@ Both start from about 70 s serial, but scale very differently:
 
 ### Latency and bandwidth (ping-pong)
 
-<img src="figures/pingpong.png" alt="One-way MPI message time vs message size between two ASPIRE2A nodes, with the latency-bandwidth model" width="680">
+<img src="figures/pingpong_chart.png" alt="One-way MPI message time vs message size between two ASPIRE2A nodes, with the latency-bandwidth model" width="680">
 
 Two ranks on **different nodes** bounce messages from 8 B to 1 MB, and I fit the model *T(n) = α + n·β*:
 
